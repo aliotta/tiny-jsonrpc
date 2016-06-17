@@ -1,43 +1,29 @@
-'use strict';
+var StreamClient = require('../lib/tiny-jsonrpc').StreamClient;
+var Client = require('../lib/tiny-jsonrpc').Client;
+var expect = require('expect.js');
 
-var test = require('tape');
-var sinon = require('sinon');
+describe('StreamClient instances', function () {
+    var mockStream = { on: function () {} };
 
-var tinyJsonRpc = require('../');
-var Client = tinyJsonRpc.Client;
-var StreamClient = tinyJsonRpc.StreamClient;
-
-test('StreamClient instances', function (t) {
-  var mockStream = { on: function () {} };
-
-  t.test('are instances of Client', function (t) {
-    var client = new StreamClient({
-      server: mockStream
+    it('are instances of Client', function () {
+        var client = new StreamClient({
+            server: mockStream
+        });
+        expect(client).to.be.a(Client);
     });
 
-    t.ok(client instanceof Client);
-
-    t.end();
-  });
-
-  t.test('provide a request method', function (t) {
-    var client = new StreamClient({
-      server: mockStream
+    it('provide a request method', function () {
+        var client = new StreamClient({
+            server: mockStream
+        });
+        expect(client.request instanceof Function).to.be(true);
     });
-    t.ok(client.request instanceof Function);
 
-    t.end();
-  });
-
-  t.test('inherit a notify method', function (t) {
-    var client = new StreamClient({
-      server: mockStream
+    it('inherit a notify method', function () {
+        var client = new StreamClient({
+            server: mockStream
+        });
+        expect(client.notify).to.be(Client.prototype.notify);
     });
-    t.equal(client.notify, Client.prototype.notify);
-
-    t.end();
-  });
-
-  t.end();
 });
 

@@ -1,15 +1,19 @@
-'use strict';
+var Client = require('../lib/tiny-jsonrpc').Client;
+var expect = require('expect.js');
 
-var test = require('tape');
-var Client = require('../').Client;
+describe('Client instances', function () {
+    it('provide a request method', function () {
+        var client = new Client({
+            server: true
+        });
+        expect(client.request instanceof Function).to.be(true);
+    });
 
-test('Client instance', function (t) {
-  var client = new Client({
-    server: true
-  });
-
-  t.ok(client.request instanceof Function, 'provides a request method');
-  t.ok(client.notify instanceof Function, 'provides a notify method');
-
-  t.end();
+    it('provide a notify method', function () {
+        var client = new Client({
+            server: true
+        });
+        expect(client.notify instanceof Function).to.be(true);
+    });
 });
+

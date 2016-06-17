@@ -293,16 +293,12 @@
     };
 
     StreamClient.prototype._onData = function (response) {
-        try{
-            response = JSON.parse(response);
+        response = JSON.parse(response);
 
-            if (!util.isUndefined(response.id) && this._callbacks[response.id]) {
-                this._callbacks[response.id](response.error || null,
-                    response.result || null);
-                delete this._callbacks[response.id];
-            }
-        } catch(err){
-
+        if (!util.isUndefined(response.id) && this._callbacks[response.id]) {
+            this._callbacks[response.id](response.error || null,
+                response.result || null);
+            delete this._callbacks[response.id];
         }
     };
 
